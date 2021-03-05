@@ -1,0 +1,44 @@
+.component,
+.component > div,
+.component > div:nth-child(2) > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.component > div:nth-child(2) > div {
+  margin-bottom: 1.1594rem;
+}
+
+.component > div:last-child {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.component h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1.3125rem;
+  color: var(--color-gray-darker);
+}
+
+.component input {
+  width: 34.5206rem;
+  border-radius: var(--rounded-1);
+  padding: 1.125rem;
+  border: 1px solid var(--color-gray-dark);
+  color: var(--color-gray-light);
+  transition: filter 0.3s ease;
+}
+
+.component input:focus {
+  filter: drop-shadow(var(--box-shadow));
+}
+
+.component label {
+  margin-bottom: 0.625rem;
+  font-size: 0.875rem;
+}
+
+.component button {
+  margin-left: 4.6992px;
+}

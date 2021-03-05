@@ -1,0 +1,13 @@
+.component {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4.7313rem;
+}
+
+.component > form {
+  margin-left: 3.375rem;
+}
+
+.component > button {
+  margin-left: auto;
+}

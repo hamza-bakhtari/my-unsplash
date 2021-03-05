@@ -1,0 +1,31 @@
+.component {
+  position: relative;
+}
+
+.component > input {
+  width: 300px;
+  height: 3.4375rem;
+  padding-left: 3.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-gray-light);
+  transition: filter 0.3s ease;
+}
+
+.component > input:focus {
+  filter: drop-shadow(var(--box-shadow));
+}
+
+.component > input::placeholder {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.component > svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  z-index: 1;
+  margin-left: 1rem;
+  color: var(--color-gray-light);
+}
