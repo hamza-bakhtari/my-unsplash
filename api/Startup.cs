@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.ActionFilters;
 using Api.Contracts;
 using Api.Data;
 using Api.Middlewares;
@@ -32,7 +33,12 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddScoped<ValidationFilter>();
             services.AddControllers();
+            services.Configure<ApiBehaviorOptions>(opt =>
+            {
+                opt.SuppressModelStateInvalidFilter = true;
+            });
             services.AddDbContext<MyUnsplashDbContext>(options =>
             {
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
@@ -71,8 +77,6 @@ namespace Api
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();
-
-
 
             app.UseAuthorization();
 

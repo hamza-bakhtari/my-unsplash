@@ -10,7 +10,8 @@ namespace Api.Contracts
 {
     public interface IPhotoService
     {
-        Task<ApiResponse<Photo>> AddPhoto(PhotoForCreate model, ModelStateDictionary modalState);
+        Task<ApiResponse<Photo>> AddPhoto(PhotoForCreate model);
+        Task<ApiResponse<Photo>> GetPhotoById(int id);
         Task<ApiResponse<IEnumerable<Photo>>> GetPhotos();
         Task DeletePhoto(int id, string password);
     }

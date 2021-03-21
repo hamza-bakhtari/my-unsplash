@@ -19,11 +19,8 @@ namespace Api.Services
             _photoRepository = photoRepository;
         }
 
-        public async Task<ApiResponse<Photo>> AddPhoto(PhotoForCreate model, ModelStateDictionary modelState)
+        public async Task<ApiResponse<Photo>> AddPhoto(PhotoForCreate model)
         {
-            if (!modelState.IsValid)
-                throw new ApiException("Failed to add photo", new { Errors = modelState.Values });
-
             var photo = new Photo()
             {
                 Label = model.Label,
@@ -56,6 +53,18 @@ namespace Api.Services
             }
 
             await _photoRepository.DeleteAsync(photo);
+        }
+
+        public async Task<ApiResponse<Photo>> GetPhotoById(int id)
+        {
+            var photo = await _photoRepository.GetByIdAsync(id);
+
+            if (photo == null)
+            {
+                throw new ApiException("Photo not found");
+            }
+
+            return new ApiResponse<Photo>(photo);
         }
 
         public async Task<ApiResponse<IEnumerable<Photo>>> GetPhotos()

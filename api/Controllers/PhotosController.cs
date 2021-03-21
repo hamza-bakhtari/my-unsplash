@@ -1,5 +1,6 @@
 using System.Net;
 using System.Threading.Tasks;
+using Api.ActionFilters;
 using Api.Contracts;
 using Api.DTOs;
 using Api.Entities;
@@ -9,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class PhotosController : ControllerBase
     {
         private readonly IPhotoService _photoService;
@@ -20,21 +21,34 @@ namespace Api.Controllers.v1
             _photoService = photoService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            var photo = await _photoService.GetPhotoById(id);
+
+            return Ok(photo);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result = await _photoService.GetPhotos();
+            var photos = await _photoService.GetPhotos();
 
-            return Ok(result);
+            return Ok(photos);
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilter))]
         public async Task<IActionResult> Post([FromBody] PhotoForCreate model)
         {
 
-            var result = await _photoService.AddPhoto(model, ModelState);
+            var photo = await _photoService.AddPhoto(model);
 
-            return new ObjectResult(result) { StatusCode = StatusCodes.Status201Created };
+            return CreatedAtAction(
+                actionName: nameof(GetById),
+                routeValues: new { photoId = photo.Data.Id },
+                value: photo
+            );
         }
 
         [HttpDelete("{id}")]
